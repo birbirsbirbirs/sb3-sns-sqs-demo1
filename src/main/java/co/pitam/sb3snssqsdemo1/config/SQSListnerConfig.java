@@ -7,14 +7,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.Message;
+
 @Slf4j
 @Configuration
 public class SQSListnerConfig {
     private static final String QUEUE_NAME="sqs-1";
 
     @SqsListener(queueNames = QUEUE_NAME)
-    void listen(SampleRecord message){
-        log.info("Received message {} {}",message.propertyOne(),message.propertyTwo());
+    void listen(Message<?> message){
+        log.info("Received message {}",message.getPayload().toString());
     }
 
     @Bean
